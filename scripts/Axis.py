@@ -210,24 +210,46 @@ def test_axis(axis: Axis):
         counter -= 1
 
 
-# open all documents in Freecad, then
-# run the following command in python console:
+# open all documents in Freecad, 
+# then activate Assembly document,
+# then run the following command in python console:
 #     exec(open("d:/freecad/realtouch/scripts/axis.py").read())
 if __name__ == "__main__":
-    test_axis(Axis_A())
+    a = Axis_A()
+    test_axis(a)
     time.sleep(2)
-    test_axis(Axis_B())
+
+    b = Axis_B()
+    test_axis(b)
     time.sleep(2)
-    test_axis(Axis_X())
+
+    x = Axis_X()
+    test_axis(x)
     time.sleep(2)
-    test_axis(Axis_Y())
+    x.setLogPos(x.logEndPos() / 2)
+    x.refresh()
+
+    y = Axis_Y()
+    test_axis(y)
     time.sleep(2)
-    test_axis(Axis_Z())
+    
+    z = Axis_Z()
+    test_axis(z)
     time.sleep(2)
-    test_axis(Axis_U())
+    z.setLogPos(z.logEndPos() / 2)
+    z.refresh()
+
+    u = Axis_U()
+    test_axis(u)
     time.sleep(2)
-    test_axis(Axis_V())
+    u.setLogPos(u.logEndPos() / 2)
+    u.refresh()
+
+    v = Axis_V()
+    test_axis(v)
     time.sleep(2)
-    test_axis(Axis_W())
+
+    w = Axis_W()
+    test_axis(w)
     time.sleep(2)
     
