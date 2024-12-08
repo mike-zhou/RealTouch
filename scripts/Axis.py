@@ -1,6 +1,7 @@
 import FreeCAD
 from abc import ABC, abstractmethod
 import time
+import math
 
 class Axis:
     def __init__(self, docName: str, startPos: float, endPos: float):
@@ -210,11 +211,7 @@ def test_axis(axis: Axis):
         counter -= 1
 
 
-# open all documents in Freecad, 
-# then activate Assembly document,
-# then run the following command in python console:
-#     exec(open("d:/freecad/realtouch/scripts/axis.py").read())
-if __name__ == "__main__":
+def test_axises():
     a = Axis_A()
     test_axis(a)
     time.sleep(2)
@@ -252,4 +249,32 @@ if __name__ == "__main__":
     w = Axis_W()
     test_axis(w)
     time.sleep(2)
-    
+
+def test_axis_c():
+    doc_b = FreeCAD.getDocument('subAsm_Axis_B')
+    doc_c = FreeCAD.getDocument('subAsm_Driver_C')
+    vector = FreeCAD.Vector(44,-54,2)
+    rotation = FreeCAD.Rotation(FreeCAD.Vector(0,0,1), 0)
+    offset = FreeCAD.Placement(vector, rotation)
+    doc_b.getObject('AxisC_Link').AttachmentOffset = offset
+    doc_b.recompute()
+
+    c_position = 0
+    while c_position <= 360:
+        doc_c.getObject('Variables').Cpos = c_position
+        doc_c.recompute()
+        delta = 12 * (1 - math.cos(math.radians(c_position)))
+        new_z = 2 - delta
+        vector = FreeCAD.Vector(44, -54, new_z)
+        offset = FreeCAD.Placement(vector, rotation)
+        doc_b.getObject('AxisC_Link').AttachmentOffset = offset
+        doc_b.recompute()
+        c_position += 1
+
+
+# open all documents in Freecad, 
+# then activate Assembly document,
+# then run the following command in python console:
+#     exec(open("d:/freecad/realtouch/scripts/axis.py").read())
+if __name__ == "__main__":
+    test_axis_c()    
