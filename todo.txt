@@ -1,0 +1,1 @@
+add more holes to Z2 and Z3 so that axisA can be moved up or down.
